@@ -1,0 +1,13 @@
+﻿node_modules/
+.env
+.env.local
+.env.yaml
+*.log
+.DS_Store
+dist/
+build/
+.vscode/
+.idea/
+coverage/
+.nyc_output/
+package-lock.json
