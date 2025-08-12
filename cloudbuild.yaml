@@ -1,0 +1,27 @@
+﻿steps:
+  # Build Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/procoil-greenfield-prod/procoil:\', '.']
+  
+  # Push to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/procoil-greenfield-prod/procoil:\']
+  
+  # Deploy to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'procoil-paradigm'
+      - '--image=gcr.io/procoil-greenfield-prod/procoil:\'
+      - '--region=us-central1'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+      - '--memory=2Gi'
+      - '--cpu=1'
+      - '--max-instances=10'
+      - '--min-instances=1'
+
+images:
+  - 'gcr.io/procoil-greenfield-prod/procoil:\'
+  - 'gcr.io/procoil-greenfield-prod/procoil:latest'
