@@ -1,17 +1,4 @@
 ﻿steps:
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     entrypoint: gcloud
-    args:
-      - run
-      - deploy
-      - procoil-paradigm
-      - --source=.
-      - --region=us-central1
-      - --allow-unauthenticated
-      - --port=8080
-      - --memory=2Gi
-      - --project=procoil-greenfield-prod
-timeout: 1200s
-options:
-  logging: CLOUD_LOGGING_ONLY
-  machineType: 'N1_HIGHCPU_8'
+    args: ['run', 'deploy', 'procoil-paradigm', '--source', '.', '--region', 'us-central1', '--allow-unauthenticated', '--project', 'procoil-greenfield-prod']
