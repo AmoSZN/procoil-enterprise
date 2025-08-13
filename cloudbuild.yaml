@@ -1,27 +1,20 @@
-﻿steps:
-  # Build Docker image
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/procoil-greenfield-prod/procoil:\', '.']
-  
-  # Push to Container Registry
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/procoil-greenfield-prod/procoil:\']
-  
-  # Deploy to Cloud Run
-  - name: 'gcr.io/cloud-builders/gcloud'
+steps:
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
     args:
-      - 'run'
-      - 'deploy'
-      - 'procoil-paradigm'
-      - '--image=gcr.io/procoil-greenfield-prod/procoil:\'
-      - '--region=us-central1'
-      - '--platform=managed'
-      - '--allow-unauthenticated'
-      - '--memory=2Gi'
-      - '--cpu=1'
-      - '--max-instances=10'
-      - '--min-instances=1'
-
-images:
-  - 'gcr.io/procoil-greenfield-prod/procoil:\'
-  - 'gcr.io/procoil-greenfield-prod/procoil:latest'
+      - run
+      - deploy
+      - procoil-paradigm
+      - --source=.
+      - --region=us-central1
+      - --allow-unauthenticated
+      - --port=8080
+      - --memory=2Gi
+      - --project=procoil-greenfield-prod
+timeout: 1200s
+options:
+  logging: CLOUD_LOGGING_ONLY
+  logsBucket: 'gs://procoil-greenfield-prod_cloudbuild_logs'
+substitutions:
+  _PROJECT_ID: procoil-greenfield-prod
+  _PROJECT_NUMBER: '583044708443'

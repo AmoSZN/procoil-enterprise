@@ -1,4 +1,12 @@
-﻿const express = require('express');
+// Project Configuration
+const PROJECT_CONFIG = {
+    projectName: 'ProCoil Enterprise',
+    projectId: 'procoil-greenfield-prod',
+    projectNumber: '583044708443',
+    region: 'us-central1',
+    serviceName: 'procoil-paradigm'
+};
+const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const { Firestore } = require('@google-cloud/firestore');
@@ -112,7 +120,7 @@ async function loadSecrets() {
             }
         }
         
-        logger.info('âœ… Configuration loaded successfully');
+        logger.info('✅ Configuration loaded successfully');
         return true;
     } catch (error) {
         logger.error('Failed to load configuration:', error);
@@ -146,7 +154,7 @@ async function authenticate() {
         authToken = response.data;
         tokenExpiry = new Date(Date.now() + 3600000); // Token expires in 1 hour
         
-        logger.info('âœ… Authenticated with Paradigm ERP');
+        logger.info('✅ Authenticated with Paradigm ERP');
         return authToken;
     } catch (error) {
         logger.error('Authentication failed:', error.message);
@@ -565,13 +573,14 @@ async function startServer() {
     await loadSecrets();
     
     app.listen(PORT, () => {
-        logger.info(`ðŸš€ ProCoil Server running on port ${PORT}`);
-        logger.info(`ðŸ“Š Scrap Factor: ${BUSINESS_CONFIG.scrapFactor * 100}%`);
-        logger.info(`ðŸ“¦ Product Categories: ${Object.keys(PRODUCT_CATEGORIES).join(', ')}`);
-        logger.info(`ðŸŽ¨ Colors Configured: ${Object.keys(PRODUCT_CATEGORIES.colors).length}`);
-        logger.info(`ðŸ“¡ Paradigm API: ${PARADIGM_CONFIG?.baseURL || 'Not configured'}`);
+        logger.info(`🚀 ProCoil Server running on port ${PORT}`);
+        logger.info(`📊 Scrap Factor: ${BUSINESS_CONFIG.scrapFactor * 100}%`);
+        logger.info(`📦 Product Categories: ${Object.keys(PRODUCT_CATEGORIES).join(', ')}`);
+        logger.info(`🎨 Colors Configured: ${Object.keys(PRODUCT_CATEGORIES.colors).length}`);
+        logger.info(`📡 Paradigm API: ${PARADIGM_CONFIG?.baseURL || 'Not configured'}`);
     });
 }
 
 startServer();
+
 

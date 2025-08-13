@@ -1,12 +1,10 @@
-﻿{
-  "name": "procoil-greenfield",
+{
+  "name": "procoil-paradigm",
   "version": "1.0.0",
-  "description": "ProCoil Enterprise System with Paradigm Integration",
+  "description": "ProCoil Enterprise API",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "deploy": "gcloud run deploy",
-    "logs": "gcloud run logs read procoil-paradigm --limit=50"
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.18.2",
