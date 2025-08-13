@@ -1,4 +1,13 @@
 ﻿steps:
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     entrypoint: gcloud
-    args: ['run', 'deploy', 'procoil-paradigm', '--source', '.', '--region', 'us-central1', '--allow-unauthenticated', '--project', 'procoil-greenfield-prod']
+    args:
+      - run
+      - deploy
+      - procoil-paradigm
+      - --source=.
+      - --region=us-central1
+      - --allow-unauthenticated
+      - --project=procoil-greenfield-prod
+options:
+  logging: CLOUD_LOGGING_ONLY
