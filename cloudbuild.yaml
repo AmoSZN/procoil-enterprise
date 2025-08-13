@@ -1,4 +1,4 @@
-steps:
+﻿steps:
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     entrypoint: gcloud
     args:
@@ -15,6 +15,3 @@ timeout: 1200s
 options:
   logging: CLOUD_LOGGING_ONLY
   machineType: 'N1_HIGHCPU_8'
-substitutions:
-  _PROJECT_ID: procoil-greenfield-prod
-  _PROJECT_NUMBER: '583044708443'

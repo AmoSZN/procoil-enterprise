@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>ProCoil Enterprise - Live</title>
+    <meta http-equiv="refresh" content="30">
+    <style>
+        body { font-family: Arial; padding: 40px; background: linear-gradient(135deg, #667eea, #764ba2); }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+        h1 { color: #333; text-align: center; }
+        .status { text-align: center; padding: 20px; margin: 20px 0; border-radius: 10px; }
+        .online { background: #d4edda; color: #155724; }
+        .info { background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0; }
+        .url { background: #e9ecef; padding: 10px; border-radius: 5px; word-break: break-all; font-family: monospace; }
+        button { background: #007bff; color: white; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ ProCoil Enterprise</h1>
+        <div class="status online">
+            <h2>✅ Service is LIVE!</h2>
+        </div>
+        
+        <div class="info">
+            <strong>API Endpoint:</strong>
+            <div class="url">https://procoil-paradigm-fxpfwmdwfa-uc.a.run.app</div>
+        </div>
+        
+        <div class="info">
+            <strong>Project Details:</strong>
+            <ul>
+                <li>Project ID: procoil-greenfield-prod</li>
+                <li>Project Number: 583044708443</li>
+                <li>Region: us-central1</li>
+                <li>Service: procoil-paradigm</li>
+            </ul>
+        </div>
+        
+        <div class="info">
+            <strong>Quick Links:</strong>
+            <ul>
+                <li><a href="https://procoil-paradigm-fxpfwmdwfa-uc.a.run.app" target="_blank">API Root</a></li>
+                <li><a href="https://procoil-paradigm-fxpfwmdwfa-uc.a.run.app/health" target="_blank">Health Check</a></li>
+                <li><a href="https://console.cloud.google.com/run/detail/us-central1/procoil-paradigm/metrics?project=procoil-greenfield-prod" target="_blank">Cloud Console</a></li>
+                <li><a href="https://github.com/AmoSZN/procoil-enterprise" target="_blank">GitHub Repository</a></li>
+            </ul>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="window.open('https://procoil-paradigm-fxpfwmdwfa-uc.a.run.app/health', '_blank')">Test API</button>
+            <button onclick="location.reload()">Refresh Status</button>
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px; color: #666;">
+            <small>Auto-refreshes every 30 seconds</small>
+        </div>
+    </div>
+</body>
+</html>
