@@ -14,7 +14,7 @@ steps:
 timeout: 1200s
 options:
   logging: CLOUD_LOGGING_ONLY
-  logsBucket: 'gs://procoil-greenfield-prod_cloudbuild_logs'
+  machineType: 'N1_HIGHCPU_8'
 substitutions:
   _PROJECT_ID: procoil-greenfield-prod
   _PROJECT_NUMBER: '583044708443'
