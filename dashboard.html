@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>ProCoil Enterprise - API Dashboard</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { text-align: center; color: white; margin-bottom: 30px; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { opacity: 0.9; }
+        .card { background: white; padding: 25px; margin: 20px 0; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
+        .info-item { background: #f8f9fa; padding: 15px; border-radius: 8px; }
+        .info-label { font-size: 0.85em; color: #6c757d; margin-bottom: 5px; }
+        .info-value { font-size: 1.1em; font-weight: 600; color: #2c3e50; font-family: monospace; }
+        .status { padding: 6px 12px; border-radius: 20px; color: white; display: inline-block; font-weight: 600; }
+        .online { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .offline { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+        button { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; margin: 5px; font-weight: 600; transition: transform 0.2s; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        pre { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; overflow-x: auto; font-family: 'Fira Code', monospace; line-height: 1.5; }
+        .endpoint-url { background: #e9ecef; padding: 8px 12px; border-radius: 6px; font-family: monospace; word-break: break-all; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ ProCoil Enterprise</h1>
+            <p>API Dashboard & Testing Interface</p>
+        </div>
+        
+        <div class="card">
+            <h2>📊 Project Information</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Project Name</div>
+                    <div class="info-value">ProCoil Enterprise</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Project ID</div>
+                    <div class="info-value">procoil-greenfield-prod</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Project Number</div>
+                    <div class="info-value">583044708443</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Region</div>
+                    <div class="info-value">us-central1</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>🌐 Service Status</h2>
+            <p><strong>API Endpoint:</strong></p>
+            <div class="endpoint-url">https://procoil-paradigm-fxpfwmdwfa-uc.a.run.app</div>
+            <div style="margin-top: 15px;">
+                <strong>Status:</strong> <span id="status" class="status">Checking...</span>
+                <span style="margin-left: 20px;"><strong>Response Time:</strong> <span id="responseTime">-</span> ms</span>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>🧪 Test Endpoints</h2>
+            <button onclick="testEndpoint('/')">Test Root</button>
+            <button onclick="testEndpoint('/health')">Test Health</button>
+            <button onclick="testOptimization()">Test Optimization</button>
+            <button onclick="testInventory()">Test Inventory</button>
+            <button onclick="clearResponse()">Clear Response</button>
+        </div>
+        
+        <div class="card">
+            <h2>📤 Response</h2>
+            <pre id="response">Ready to test endpoints...</pre>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = 'https://procoil-paradigm-fxpfwmdwfa-uc.a.run.app';
+        
+        async function checkStatus() {
+            const startTime = Date.now();
+            try {
+                const response = await fetch(API_URL + '/health');
+                const endTime = Date.now();
+                const responseTime = endTime - startTime;
+                
+                if (response.ok) {
+                    document.getElementById('status').className = 'status online';
+                    document.getElementById('status').textContent = '✅ Online';
+                    document.getElementById('responseTime').textContent = responseTime;
+                } else {
+                    throw new Error('Service not responding');
+                }
+            } catch (error) {
+                document.getElementById('status').className = 'status offline';
+                document.getElementById('status').textContent = '❌ Offline';
+                document.getElementById('responseTime').textContent = '-';
+            }
+        }
+        
+        async function testEndpoint(endpoint) {
+            try {
+                document.getElementById('response').textContent = 'Loading...';
+                const startTime = Date.now();
+                const response = await fetch(API_URL + endpoint);
+                const endTime = Date.now();
+                const data = await response.json();
+                
+                const output = {
+                    endpoint: endpoint,
+                    status: response.status,
+                    responseTime: (endTime - startTime) + 'ms',
+                    data: data
+                };
+                
+                document.getElementById('response').textContent = JSON.stringify(output, null, 2);
+            } catch (error) {
+                document.getElementById('response').textContent = JSON.stringify({
+                    error: error.message,
+                    endpoint: endpoint,
+                    timestamp: new Date().toISOString()
+                }, null, 2);
+            }
+        }
+        
+        async function testOptimization() {
+            const testData = {
+                items: [
+                    { productId: 'PANEL-001', color: 'Ocean Blue', quantity: 10, length: 12, width: 36 },
+                    { productId: 'TRIM-001', color: 'Ocean Blue', quantity: 5, length: 10, width: 12 }
+                ],
+                coilWidth: 36
+            };
+            
+            try {
+                document.getElementById('response').textContent = 'Processing optimization...';
+                const startTime = Date.now();
+                const response = await fetch(API_URL + '/api/optimize/coil', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(testData)
+                });
+                const endTime = Date.now();
+                const data = await response.json();
+                
+                const output = {
+                    endpoint: '/api/optimize/coil',
+                    method: 'POST',
+                    status: response.status,
+                    responseTime: (endTime - startTime) + 'ms',
+                    request: testData,
+                    response: data
+                };
+                
+                document.getElementById('response').textContent = JSON.stringify(output, null, 2);
+            } catch (error) {
+                document.getElementById('response').textContent = JSON.stringify({
+                    error: error.message,
+                    endpoint: '/api/optimize/coil',
+                    timestamp: new Date().toISOString()
+                }, null, 2);
+            }
+        }
+        
+        async function testInventory() {
+            try {
+                document.getElementById('response').textContent = 'Fetching inventory...';
+                const startTime = Date.now();
+                const response = await fetch(API_URL + '/api/inventory/metal-roofing');
+                const endTime = Date.now();
+                const data = await response.json();
+                
+                const output = {
+                    endpoint: '/api/inventory/metal-roofing',
+                    status: response.status,
+                    responseTime: (endTime - startTime) + 'ms',
+                    itemCount: Array.isArray(data) ? data.length : 0,
+                    data: data
+                };
+                
+                document.getElementById('response').textContent = JSON.stringify(output, null, 2);
+            } catch (error) {
+                document.getElementById('response').textContent = JSON.stringify({
+                    error: error.message,
+                    endpoint: '/api/inventory/metal-roofing',
+                    timestamp: new Date().toISOString()
+                }, null, 2);
+            }
+        }
+        
+        function clearResponse() {
+            document.getElementById('response').textContent = 'Ready to test endpoints...';
+        }
+        
+        // Check status on load
+        checkStatus();
+        setInterval(checkStatus, 30000); // Check every 30 seconds
+    </script>
+</body>
+</html>
